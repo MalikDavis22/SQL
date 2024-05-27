@@ -56,16 +56,26 @@ VALUES
     ('Company JJ', 'Manufacturing', 370.0, 3100, 1, 20, 12, 7.6),
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
 
-#Make a table determining which companies provide either above average, average, or below average assistance for maternity leave. Include company name and maternity leave weeks. Name the new column newborn assistance.
-SELECT company_name, maternity_leave_weeks,
+#Make a table determining which companies provide either above average, average, or below average assistance for maternity leave. Include company name and maternity leave weeks.
 CASE WHEN maternity_leave_weeks >= 10 THEN 'Above Average'
 WHEN maternity_leave_weeks >= 8 THEN 'Average'
 ELSE 'Below Average'
 END AS newborn_assistance
 FROM fortune_companies;
 
-#Identify which companies have a great work life balance with 20 or more PTO days. Rename the new column good work life balance. 
-SELECT company_name, paid_time_off_days AS good_work_life_balance
+#Identify which companies have a great work life balance with 20 or more PTO days.
 FROM fortune_companies
 GROUP BY company_name
 HAVING paid_time_off_days >= 20;
+
+#Display all information from the Technology companies with greater than 20,000 employees.
+SELECT *
+FROM fortune_companies
+WHERE industry = 'Technology'
+AND employees > '20000';
+
+#List the top performing companies based on renvenue generated.
+SELECT company_name, MAX(revenue) AS revenue_leaders
+FROM fortune_companies
+GROUP BY revenue
+ORDER BY revenue desc;
